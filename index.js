@@ -33,13 +33,19 @@ function displayResults(responseJson, maxResults) {
   $('#results').removeClass('hidden');
 };
 
-function getNews(query, api_key, maxResults=10) {
-  const params = {
+function getPark(query, maxResults=10) {
+  query = query.split(",");
+  let queryStr = "";
+  for (let i = 0; i < query.length; i++){
+    queryStr += `stateCode=${query[i].trim().toUpperCase()}&`
+  }
+
+  /*const params = {
     parkCode: query,
     api_key: apiKey
-  };
-  const queryString = formatQueryParams(params)
-  const url = searchURL + '?' + queryString;
+  };*/
+  //const queryString = formatQueryParams(params)
+  const url = `${searchURL}?${queryStr}api_key=${apiKey}`;
 
   console.log(url);
 
@@ -66,7 +72,7 @@ function watchForm() {
     event.preventDefault();
     const searchTerm = $('#js-search-term').val();
     const maxResults = $('#js-max-results').val();
-    getNews(searchTerm, apiKey, maxResults);
+    getPark(searchTerm, maxResults);
   });
 }
 
